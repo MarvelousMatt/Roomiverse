@@ -32,7 +32,7 @@ public class SummonFly : MonoBehaviour
             isSummoning = true;
             move.enabled = false;
             r.velocity += transform.up * jumpForce;
-            Invoke("SpawnAndMoveFly", summonTime);
+            Invoke("SpawnTakeoffFly", summonTime);
         }
     }
 

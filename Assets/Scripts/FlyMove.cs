@@ -9,6 +9,7 @@ public class FlyMove : MonoBehaviour
     public GameObject lookTarget;
 
     public float speed;
+    public float boostSpeed;
     public float turnSpeed;
     public float rotationSmoothing;
 
@@ -46,8 +47,21 @@ public class FlyMove : MonoBehaviour
 
     void DoMovement()
     {
-        float xIntent = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        float zIntent = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+        float xIntent;
+        float zIntent;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            xIntent = Input.GetAxis("Horizontal") * boostSpeed * Time.deltaTime;
+            zIntent = Input.GetAxis("Vertical") * boostSpeed * Time.deltaTime;
+        }
+        else
+        {
+            xIntent = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+            zIntent = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+        }
+
+        
 
         transform.position += (xIntent * transform.right) + (zIntent * transform.forward);
     }
