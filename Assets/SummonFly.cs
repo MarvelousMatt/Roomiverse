@@ -16,6 +16,8 @@ public class SummonFly : MonoBehaviour
 
     public GameObject model;
 
+    bool isFlying;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,10 +31,29 @@ public class SummonFly : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q) && !isSummoning)
         {
-            isSummoning = true;
-            move.enabled = false;
-            r.velocity += transform.up * jumpForce;
-            Invoke("SpawnTakeoffFly", summonTime);
+            if (isFlying)
+            {
+                fly.enabled = false;
+                move.enabled = true;
+                isFlying = false;
+                model.SetActive(false);
+                
+
+                //Animation and or toward planet launching
+                //Include invoke when this action has an animation
+
+            }
+            else
+            {
+                isSummoning = true;
+                move.enabled = false;
+                r.velocity += transform.up * jumpForce;
+                isFlying = true;
+                Invoke("SpawnTakeoffFly", summonTime);
+            }
+
+
+
         }
     }
 
@@ -54,6 +75,7 @@ public class SummonFly : MonoBehaviour
             fly.enabled = true;
             move.enabled = false;
             model.SetActive(true);
+            isSummoning = false;
         }
     }
 
