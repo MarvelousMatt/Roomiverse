@@ -18,12 +18,16 @@ public class SummonFly : MonoBehaviour
 
     bool isFlying;
 
+    public GameObject flyCamTarget;
+    public GameObject groundCamTarget;
+
     // Start is called before the first frame update
     void Start()
     {
         move = GetComponent<GravityMovement>();
         fly = GetComponent<FlyMove>();
         r = GetComponent<Rigidbody>();
+        CameraMove.instance.SwitchCamTarget(groundCamTarget);
     }
 
     // Update is called once per frame
@@ -37,7 +41,7 @@ public class SummonFly : MonoBehaviour
                 move.enabled = true;
                 isFlying = false;
                 model.SetActive(false);
-                
+                CameraMove.instance.SwitchCamTarget(groundCamTarget);
 
                 //Animation and or toward planet launching
                 //Include invoke when this action has an animation
@@ -50,6 +54,7 @@ public class SummonFly : MonoBehaviour
                 r.velocity += transform.up * jumpForce;
                 isFlying = true;
                 Invoke("SpawnTakeoffFly", summonTime);
+                CameraMove.instance.SwitchCamTarget(flyCamTarget);
             }
 
 

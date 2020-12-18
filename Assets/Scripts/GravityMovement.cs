@@ -44,12 +44,10 @@ public class GravityMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetInputs();
-
-        //gravityObject = GravityCheck();
-       
+        GetInputs();  
     }
 
+    //Feeds inputs in for use during fixed update
     void GetInputs()
     {
         xInput = (decimal)Input.GetAxis("Horizontal");
@@ -57,12 +55,6 @@ public class GravityMovement : MonoBehaviour
         isJumping = Input.GetKey(KeyCode.Space);
     }
 
-    /*
-    private void LateUpdate()
-    {
-        
-    }
-    */
     private void FixedUpdate()
     {
         grounded = Physics.Raycast(transform.position, -transform.up, groundedDistance);
@@ -77,41 +69,6 @@ public class GravityMovement : MonoBehaviour
         DoMovement();
         DoRotation();
     }
-
-    /*
-    //Checks proximity to gravity bodies
-    //returns the closest gravity object
-    GameObject GravityCheck()
-    {
-        /*
-
-
-        Ray ray = new Ray(transform.position, -transform.up);
-
-        if (!Physics.SphereCast(ray, 10, maxGravityDistance))
-        {
-            gravityObject = defaultGravityObject;
-        }
-
-        /*
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 500);
-
-        GameObject grav = gravityObject.gameObject;
-
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            if(colliders[i].gameObject.CompareTag("GravityObject") && 
-                Vector3.Distance(colliders[i].ClosestPoint(transform.position),transform.position) < Vector3.Distance(grav.GetComponent<Collider>().ClosestPoint(transform.position), transform.position))
-            {
-                grav = colliders[i].gameObject;
-            }
-        }
-
-        Debug.Log(grav.name);
-        
-        return grav;
-    }
-    */
 
     //Rotates the player towards whichever planet they are standing on
     void DoRotation()
@@ -170,7 +127,6 @@ public class GravityMovement : MonoBehaviour
         if (isJumping && grounded)
         {
             yIntent += jumpForce;
-            Debug.Log("Jumped");
         }
 
         //Setting vectors for directions

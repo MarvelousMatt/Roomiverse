@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlyMove : MonoBehaviour
 {
-    Vector3 flyCamTargetPostion;
+    
 
     public GameObject lookTarget;
 
