@@ -23,8 +23,16 @@ public class GravityMovement : MonoBehaviour
     public float groundedDistance;
     public GravityObject defaultGravityObject;
 
+    //Inputs
+    decimal xInput;
+    decimal zInput;
+    bool isJumping;
+
+    //Components
     Rigidbody r;
-    bool grounded;
+
+    //Internals
+    public bool grounded;
 
     // Start is called before the first frame update
     void Start()
@@ -36,10 +44,17 @@ public class GravityMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        grounded = Physics.Raycast(transform.position, -transform.up, groundedDistance);
+        GetInputs();
 
         //gravityObject = GravityCheck();
        
+    }
+
+    void GetInputs()
+    {
+        xInput = (decimal)Input.GetAxis("Horizontal");
+        zInput = (decimal)Input.GetAxis("Vertical");
+        isJumping = Input.GetKey(KeyCode.Space);
     }
 
     /*
@@ -50,6 +65,10 @@ public class GravityMovement : MonoBehaviour
     */
     private void FixedUpdate()
     {
+        grounded = Physics.Raycast(transform.position, -transform.up, groundedDistance);
+
+        Debug.DrawLine(transform.position, transform.position - transform.up * groundedDistance);
+
         if (groundTurn)
         {
             transform.up = Vector3.Lerp(transform.up, Vector3.up, rotationSpeed * Time.deltaTime);
@@ -143,31 +162,31 @@ public class GravityMovement : MonoBehaviour
         float zIntent;
 
         //Gather player input
-        xIntent = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        zIntent = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+        xIntent = (float)xInput * speed * Time.deltaTime;
+        zIntent = (float)zInput * speed * Time.deltaTime;
         yIntent = 0;
 
         //If jump is input, add upward momentum
-        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        if (isJumping && grounded)
         {
             yIntent += jumpForce;
-            r.velocity += new Vector3(0, -r.velocity.y, 0);
+            Debug.Log("Jumped");
         }
 
         //Setting vectors for directions
         //Also includes force pushing player down to make sure they stick to the gravity object
-        Vector3 xVec = transform.right.normalized * xIntent + -transform.up * Mathf.Abs(xIntent);
+        Vector3 xVec = transform.right.normalized * xIntent;// + -transform.up * Mathf.Abs(xIntent);
         Vector3 yVec = transform.up.normalized * yIntent;
-        Vector3 zVec = transform.forward.normalized * zIntent + -transform.up * Mathf.Abs(zIntent);
+        Vector3 zVec = transform.forward.normalized * zIntent;// + -transform.up * Mathf.Abs(zIntent);
 
         //Apply gravity to the player if they are not on the ground
 
-        if(!grounded && gravityObject.isCube)
+        if(gravityObject.isCube)
         {
             yVec += -transform.up.normalized * gravityForce;
         }
 
-        if (!grounded && !gravityObject.isCube)
+        if (!gravityObject.isCube)
         {
             yVec += (gravityObject.transform.position - transform.position).normalized * gravityForce;
         }
@@ -181,6 +200,7 @@ public class GravityMovement : MonoBehaviour
         //Contain velocity by maxSpeed
         r.velocity = Vector3.ClampMagnitude(r.velocity, maxSpeed);
 
+        //Debug.Log("yintent " + yIntent + "  " + "yVec " + yVec + "  " + "Move intent " + movementIntent);
     }
 
 

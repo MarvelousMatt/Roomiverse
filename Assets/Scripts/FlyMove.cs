@@ -39,8 +39,6 @@ public class FlyMove : MonoBehaviour
         Quaternion yRot = Quaternion.Euler(-yRotation, 0, 0);
         Quaternion xRot = Quaternion.Euler(0, xRotation, 0);
 
-        Debug.Log(xRotation + "" + xRot);
-
         transform.rotation *= yRot * xRot;
         transform.LookAt(lookTarget.transform, Vector3.up);
     }
