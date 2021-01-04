@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameObject player { get; private set; }
+    //Figure out how to set this
+    public static GravityObject floor { get; private set; }
 
     public static GameManager instance;
 
