@@ -45,7 +45,7 @@ public class ShootGun : MonoBehaviour
         bullet.GetComponent<Bullet>().gravity = gravity;
 
         bullet.GetComponent<Bullet>().gravityObject = GetComponent<GravityMovement>().gravityObject;
-        bullet.GetComponent<Bullet>().defaultGravObject = defaultGravObject;
+        bullet.GetComponent<Bullet>().defaultGravityObject = defaultGravObject;
        
         
     }

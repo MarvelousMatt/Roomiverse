@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GravityObject
   - LandingPad
+  - Enemy
   layers:
   - Default
   - TransparentFX

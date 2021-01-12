@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
 
     public GravityObject gravityObject;
 
-    public GravityObject defaultGravObject;
+    public GravityObject defaultGravityObject;
 
     int currentGravPriority = 0;
 
@@ -40,6 +40,16 @@ public class Bullet : MonoBehaviour
             transform.position).normalized * gravity);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            collision.gameObject.GetComponent<Enemy>().TakeDamage(damage, transform.position);
+            Destroy(gameObject);
+        }
+    }
+
+
     private void OnTriggerStay(Collider other)
     {
         // Debug.Log("Stayed within " + other.gameObject.name);
@@ -62,7 +72,7 @@ public class Bullet : MonoBehaviour
         if (gravityObject == other.gameObject.GetComponent<GravityObject>())
         {
             // Debug.Log("Exiting current gravity");
-            gravityObject = defaultGravObject;
+            gravityObject = defaultGravityObject;
             currentGravPriority = 0;
         }
     }
