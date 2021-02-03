@@ -1,50 +1,96 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MapValues;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed;
-    public int damage;
-    public float lifetime;
-    public float gravity;
+    int damage;
+    float lifetime;
+    float gravity;
+    GravityObject gravityObject;
+    GravityObject defaultGravityObject;
+    bool isEnemy;
+    float liveTime;
+    int minDamage;
+    int maxDamage;
 
     public Color lightColor;
-
-
-    public GravityObject gravityObject;
-
-    public GravityObject defaultGravityObject;
 
     int currentGravPriority = 0;
 
     Rigidbody r;
 
-    public void SetupBullet()
+    public void SetupBullet(int damageIn, float gravityIn, GravityObject gravObjectIn, Vector3 velocityIn, float lifetimeIn)
     {
-        
+        damage = damageIn;
+        gravity = gravityIn;
+        gravityObject = gravObjectIn;
+        r.velocity = velocityIn;
+        lifetime = lifetimeIn;
+        isEnemy = true;
+        //Colour stuff here
+    }
+
+    public void SetupBullet(int damageIn, float gravityIn, GravityObject gravObjectIn, Vector3 velocityIn, float lifetimeIn, int minDamageIn, int maxDamageIn)
+    {
+        damage = damageIn;
+        gravity = gravityIn;
+        gravityObject = gravObjectIn;
+        r.velocity = velocityIn;
+        lifetime = lifetimeIn;
+        isEnemy = false;
+        minDamage = minDamageIn;
+        maxDamage = maxDamageIn;
+        //Colour stuff here
     }
 
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         r = GetComponent<Rigidbody>();
+        liveTime = Time.time;
     }
 
 
     void FixedUpdate()
     {
-        r.AddForce((
-            gravityObject.transform.position - 
-            transform.position).normalized * gravity);
+        if ((liveTime - Time.time) > lifetime)
+        {
+            Destroy(gameObject);
+        }
+
+        if (!isEnemy)
+        {
+            damage = (int)MapValuesExtension.Map(Time.time, liveTime, liveTime + lifetime, minDamage, maxDamage);
+        }
+        
+
+        if (gravityObject != null)
+        {
+            r.AddForce((gravityObject.transform.position - transform.position).normalized * gravity);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (!isEnemy)
         {
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(damage, transform.position);
+            Debug.Log(damage);
+        }
+
+        if (collision.gameObject.CompareTag("Enemy") && isEnemy)
+        {
+            collision.gameObject.GetComponent<Enemy>().TakeDamage((int)damage, transform.position);
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            //Deal damage to player
+            Destroy(gameObject);
+        }
+        else
+        {
             Destroy(gameObject);
         }
     }

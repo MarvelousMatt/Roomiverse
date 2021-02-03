@@ -33,7 +33,7 @@ public class SummonFly : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && !isSummoning)
+        if (Input.GetKeyDown(KeyCode.F) && !isSummoning)
         {
             if (isFlying)
             {

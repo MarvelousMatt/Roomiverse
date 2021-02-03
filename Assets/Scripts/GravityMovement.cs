@@ -15,6 +15,8 @@ public class GravityMovement : MonoBehaviour
     public float groundedRotationSpeed;
     public float cubeTolerance;
     bool groundTurn = false;
+    public float angle;
+    public float camRotationSpeed;
 
     [Header("Gravity")]
     public GravityObject gravityObject;
@@ -52,6 +54,21 @@ public class GravityMovement : MonoBehaviour
     {
         xInput = (decimal)Input.GetAxis("Horizontal");
         zInput = (decimal)Input.GetAxis("Vertical");
+
+        //This feels hacky
+        int rotInput = 0;
+        if (Input.GetKey(KeyCode.E))
+        {
+            rotInput += 1;
+        }
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            rotInput -= 1;
+        }
+
+        angle += rotInput * camRotationSpeed;
+
         isJumping = Input.GetKey(KeyCode.Space);
     }
 
@@ -97,14 +114,21 @@ public class GravityMovement : MonoBehaviour
                 Vector3 gravityUp = (transform.position - gravityObject.transform.position).normalized;
 
                 Vector3 localUp = transform.up;
+                /*
+                Vector3 store = model.transform.localRotation.eulerAngles;
+                model.transform.LookAt(point, transform.up);
+                model.transform.localEulerAngles = new Vector3(store.x, model.transform.localEulerAngles.y, store.z);
+                */
 
                 if (!grounded)
                 {
                     transform.up = Vector3.Lerp(transform.up, gravityUp, rotationSpeed * Time.deltaTime);
+                    //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, angle, transform.localEulerAngles.z);
                 }
                 else
                 {
                     transform.up = Vector3.Lerp(transform.up, gravityUp, groundedRotationSpeed * Time.deltaTime);
+                   // transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, angle, transform.localEulerAngles.z);
                 }
             }
 

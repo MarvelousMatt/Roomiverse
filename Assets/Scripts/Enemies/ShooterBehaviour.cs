@@ -7,6 +7,7 @@ public class ShooterBehaviour : Enemy
 
     private void Update()
     {
+        ModelFace(GameManager.player);
         FireTimer();
     }
 }

@@ -17,6 +17,7 @@ public abstract class Enemy : MonoBehaviour
     public float bulletLifetime;
     public float bulletSpeed;
     public float bulletGravity;
+    public Vector3 targetingOffset;
 
     [Header("Misc")]
     public float gravity;
@@ -25,6 +26,8 @@ public abstract class Enemy : MonoBehaviour
     public float rotationSpeed;
 
     GameObject player;
+
+    GameObject model;
 
     Rigidbody r;
 
@@ -39,6 +42,7 @@ public abstract class Enemy : MonoBehaviour
         currentHealth = maxHealth;
         defaultGravityObject = GameManager.defaultGravityObject;
         gravityObject = defaultGravityObject;
+        model = transform.GetChild(0).gameObject;
     }
 
     public void TakeDamage(int damage, Vector3 hitPos)
@@ -59,9 +63,24 @@ public abstract class Enemy : MonoBehaviour
         
     }
 
-    public void FaceDirection()
+    //Makes the enemy face the listed gameobject
+    public void ModelFace(GameObject target)
     {
+        Vector3 store = model.transform.localRotation.eulerAngles;
 
+        model.transform.LookAt(target.transform.position + targetingOffset, transform.up);
+
+        model.transform.localEulerAngles = new Vector3(store.x,model.transform.localEulerAngles.y,store.z);//new Quaternion(store.x, model.transform.localRotation.y, store.z, store.w);
+
+        /*
+        Quaternion rotStore = transform.rotation;
+        transform.LookAt(hit.point);
+        transform.SetPositionAndRotation(transform.position, new Quaternion(rotStore.x, transform.rotation.y, rotStore.z, transform.rotation.w));
+        */
+
+
+        //model.transform.LookAt(target.transform.position + targetingOffset, transform.up);
+        //model.transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z) + targetingOffset,transform.up);
     }
 
 
@@ -74,7 +93,7 @@ public abstract class Enemy : MonoBehaviour
             return;
 
         Fire(bulletPrefab, transform.forward, gameObject);
-        nextFire = Time.time + fireDelay;
+        nextFire = Time.time + fireDelay + Random.Range(0f,1f);
     }
 
     //Finds a projectile in the pool, gives it velocity and sets it up according to the parameters on this object
@@ -87,19 +106,7 @@ public abstract class Enemy : MonoBehaviour
 
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
 
-        //Possibly more effects on destroy?
-        Destroy(bullet, bulletLifetime);
-
-
-        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
-        //projRigid.AddForce((transform.forward + targetOffset) * projectileSpeed);
-
-
-        bullet.GetComponent<Bullet>().damage = damage;
-        bullet.GetComponent<Bullet>().gravity = bulletGravity;
-
-        bullet.GetComponent<Bullet>().gravityObject = gravityObject;
-        bullet.GetComponent<Bullet>().defaultGravityObject = defaultGravityObject;
+        bullet.GetComponent<Bullet>().SetupBullet(damage, gravity, gravityObject, bullet.transform.forward * bulletSpeed, bulletLifetime);
 
     }
 
