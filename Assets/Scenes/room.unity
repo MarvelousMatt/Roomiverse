@@ -964,7 +964,7 @@ PrefabInstance:
     - target: {fileID: 2378901186334194897, guid: 9d312ebae4357bf46bd1bc8f8232c6c9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2378901186334194897, guid: 9d312ebae4357bf46bd1bc8f8232c6c9,
         type: 3}
@@ -990,6 +990,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Frank (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378901186334194909, guid: 9d312ebae4357bf46bd1bc8f8232c6c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d312ebae4357bf46bd1bc8f8232c6c9, type: 3}
@@ -1416,6 +1421,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Frank (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378901186334194909, guid: 9d312ebae4357bf46bd1bc8f8232c6c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d312ebae4357bf46bd1bc8f8232c6c9, type: 3}
@@ -4180,6 +4190,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Frank (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2378901186334194909, guid: 9d312ebae4357bf46bd1bc8f8232c6c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d312ebae4357bf46bd1bc8f8232c6c9, type: 3}
 --- !u!1 &1070240134
@@ -4815,6 +4830,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Frank (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2378901186334194909, guid: 9d312ebae4357bf46bd1bc8f8232c6c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d312ebae4357bf46bd1bc8f8232c6c9, type: 3}
 --- !u!1 &1391749242
@@ -4895,7 +4915,7 @@ Transform:
   - {fileID: 1960478362}
   - {fileID: 1302962632}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1470764269
 GameObject:
@@ -5120,6 +5140,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Frank (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378901186334194909, guid: 9d312ebae4357bf46bd1bc8f8232c6c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d312ebae4357bf46bd1bc8f8232c6c9, type: 3}
@@ -6869,6 +6894,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Frank
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378901186334194909, guid: 9d312ebae4357bf46bd1bc8f8232c6c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d312ebae4357bf46bd1bc8f8232c6c9, type: 3}

@@ -55,7 +55,8 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
-        if ((liveTime - Time.time) > lifetime)
+
+        if ((Time.time - liveTime) > lifetime)
         {
             Destroy(gameObject);
         }
@@ -74,14 +75,11 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!isEnemy)
+
+        if (collision.gameObject.CompareTag("Enemy") && !isEnemy)
         {
             Debug.Log(damage);
-        }
-
-        if (collision.gameObject.CompareTag("Enemy") && isEnemy)
-        {
-            collision.gameObject.GetComponent<Enemy>().TakeDamage((int)damage, transform.position);
+            collision.gameObject.GetComponent<Enemy>().TakeDamage(damage, transform.position);
             Destroy(gameObject);
         }
         else if (collision.gameObject.CompareTag("Player"))
